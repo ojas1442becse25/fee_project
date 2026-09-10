@@ -1,0 +1,150 @@
+.why-avenza-section {
+  padding: 4rem 0;
+  position: relative;
+}
+
+.why-avenza-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.why-avenza-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.why-avenza-title {
+  font-size: clamp(1.75rem, 3vw, 2.125rem);
+  font-weight: 700;
+  color: white;
+  line-height: 1.3;
+}
+
+.why-avenza-text {
+  font-size: 1.0625rem;
+  color: var(--text);
+  opacity: 0.85;
+  line-height: 1.7;
+}
+
+.why-avenza-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.process-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+}
+
+.process-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+.process-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.process-step {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.process-step:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.process-step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.process-step-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+  flex: 1;
+}
+
+.process-arrow {
+  color: var(--accent);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.process-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: 50px;
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 968px) {
+  .why-avenza-section {
+    padding: 3rem 0;
+  }
+
+  .why-avenza-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .process-card {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .process-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .process-steps {
+    gap: 1rem;
+  }
+
+  .process-step {
+    padding: 0.875rem;
+  }
+}
