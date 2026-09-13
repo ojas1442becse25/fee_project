@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Sparkles, Check } from 'lucide-react';
+import Button from '../ui/Button';
 
 const ProfileSummary = ({ formData, onSubmit }) => {
   const selectedInterests = formData.interests?.length || 0;
@@ -67,15 +68,9 @@ const ProfileSummary = ({ formData, onSubmit }) => {
         </div>
       </div>
 
-      <motion.button
-        className="btn btn-primary btn-large btn-glow"
-        onClick={onSubmit}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-      >
-        <Sparkles size={20} />
-        <span>Find My Career Matches</span>
-      </motion.button>
+      <Button className="btn-large btn-glow" onClick={onSubmit} icon={Sparkles}>
+        Find My Career Matches
+      </Button>
     </div>
   );
 };

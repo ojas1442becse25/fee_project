@@ -89,6 +89,9 @@
 }
 
 .btn-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.625rem 1.25rem;
   background: transparent;
   border: 1px solid rgba(248, 250, 252, 0.2);
@@ -99,6 +102,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: inherit;
+  text-decoration: none;
 }
 
 .btn-login:hover {
@@ -215,6 +219,10 @@
 
 .btn-login-mobile {
   width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   padding: 0.875rem 1.25rem;
   background: transparent;
   border: 1px solid rgba(248, 250, 252, 0.2);
@@ -225,6 +233,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: inherit;
+  text-decoration: none;
 }
 
 .btn-login-mobile:hover {

@@ -1,0 +1,36 @@
+/* ---------------------------------------------------------------
+   Career Results page (/career/results)
+   --------------------------------------------------------------- */
+
+.career-results-page {
+  min-height: 100vh;
+  padding: 6.5rem 1.5rem 4rem;
+  background: linear-gradient(180deg, var(--background) 0%, #151b3b 100%);
+}
+
+.career-results-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Compact greeting above the results header */
+.results-top-banner {
+  margin-bottom: 1.75rem;
+}
+
+.results-top-name {
+  color: var(--text);
+  opacity: 0.75;
+  font-size: 0.9375rem;
+}
+
+.results-top-name span {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .career-results-page {
+    padding-top: 5.5rem;
+  }
+}

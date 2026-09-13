@@ -1,6 +1,12 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import Button from '../ui/Button';
+import ProgressBar from '../ui/ProgressBar';
 
+// FormStep
+// --------
+// Wraps one step of the assessment. Uses component composition (children)
+// and the reusable Button + ProgressBar components.
 const FormStep = ({
   step,
   totalSteps,
@@ -16,9 +22,7 @@ const FormStep = ({
     <div className="form-step-container">
       <div className="step-header">
         <div className="step-info">Step {step} of {totalSteps}</div>
-        <div className="progress-bar-wrapper">
-          <div className="progress-bar-fill" style={{ width: `${progress}%` }} />
-        </div>
+        <ProgressBar value={progress} />
       </div>
 
       <motion.div
@@ -33,19 +37,23 @@ const FormStep = ({
 
       <div className="step-actions">
         {canGoBack && (
-          <button className="btn btn-secondary" onClick={onBack}>
-            <ArrowLeft size={18} />
-            <span>Back</span>
-          </button>
+          <Button variant="secondary" onClick={onBack} icon={ArrowLeft}>
+            Back
+          </Button>
         )}
-        <button
-          className={`btn btn-primary ${!canGoBack ? 'ml-auto' : ''}`}
-          onClick={onNext}
-          disabled={!canContinue}
-        >
-          <span>Continue</span>
-          <ArrowRight size={18} />
-        </button>
+        {/* The final step has no Continue button - it uses the
+            "Find My Career Matches" action on the summary step instead. */}
+        {step < totalSteps && (
+          <Button
+            variant="primary"
+            className={!canGoBack ? 'ml-auto' : ''}
+            onClick={onNext}
+            disabled={!canContinue}
+            icon={ArrowRight}
+          >
+            Continue
+          </Button>
+        )}
       </div>
     </div>
   );

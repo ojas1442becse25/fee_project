@@ -1,8 +1,13 @@
-import { motion } from 'framer-motion';
 import { useState } from 'react';
+import OptionCard from '../ui/OptionCard';
+import { assessmentQuestions } from '../../data/assessmentQuestions';
 
-const AcademicStep = ({ formData, updateForm }) => {
-  const streams = ['PCM', 'PCB', 'Commerce', 'Arts', 'Other'];
+// Step 2 - Academic background
+// Demonstrates: controlled components (slider + number input),
+// list rendering from a data file, handler props.
+const AcademicBgStep = ({ formData, updateForm, selectOption }) => {
+  const streams = assessmentQuestions.find((q) => q.id === 'academic').streams;
+
   const [sliderValue, setSliderValue] = useState(formData.marks || 75);
 
   const handleSliderChange = (e) => {
@@ -12,7 +17,7 @@ const AcademicStep = ({ formData, updateForm }) => {
   };
 
   const handleInputChange = (e) => {
-    const value = Math.min(100, Math.max(0, e.target.value));
+    const value = Math.min(100, Math.max(0, e.target.value || 0));
     setSliderValue(value);
     updateForm({ marks: value });
   };
@@ -25,15 +30,13 @@ const AcademicStep = ({ formData, updateForm }) => {
         <label className="question-label">Which stream best describes you?</label>
         <div className="selection-cards">
           {streams.map((stream) => (
-            <motion.button
+            <OptionCard
               key={stream}
-              className={`selection-card ${formData.stream === stream ? 'selected' : ''}`}
-              onClick={() => updateForm({ stream })}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {stream}
-            </motion.button>
+              label={stream}
+              variant="selection"
+              selected={formData.stream === stream}
+              onSelect={() => selectOption('stream', stream)}
+            />
           ))}
         </div>
       </div>
@@ -66,4 +69,4 @@ const AcademicStep = ({ formData, updateForm }) => {
   );
 };
 
-export default AcademicStep;
+export default AcademicBgStep;

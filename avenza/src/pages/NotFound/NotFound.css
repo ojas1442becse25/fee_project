@@ -1,0 +1,59 @@
+/* ---------------------------------------------------------------
+   404 Not Found page
+   --------------------------------------------------------------- */
+
+.notfound-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7rem 1.5rem 3rem;
+  background: linear-gradient(180deg, var(--background) 0%, #151b3b 100%);
+}
+
+.notfound-card {
+  text-align: center;
+  max-width: 520px;
+}
+
+.notfound-icon {
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(124, 58, 237, 0.15));
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+
+.notfound-code {
+  font-size: clamp(4rem, 10vw, 6rem);
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.notfound-title {
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+
+.notfound-text {
+  color: var(--text);
+  opacity: 0.7;
+  margin-bottom: 2rem;
+}
+
+.notfound-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}

@@ -1,10 +1,17 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, RotateCcw } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 import CareerCard from './CareerCard';
-import { useNavigate } from 'react-router-dom';
+import Button from '../ui/Button';
+import useSavedCareers from '../../hooks/useSavedCareers';
 
-const CareerResults = ({ results, resetForm }) => {
-  const navigate = useNavigate();
+// CareerResults
+// -------------
+// Renders the Top 3 career matches returned by the recommendation engine.
+// Used by the dedicated /career/results page. Owns the saved-careers state
+// and passes isSaved/onToggleSave down to each CareerCard (lifting state
+// up + props).
+const CareerResults = ({ results, onRestart }) => {
+  const { isSaved, toggleSave } = useSavedCareers();
 
   return (
     <motion.div
@@ -14,32 +21,31 @@ const CareerResults = ({ results, resetForm }) => {
       transition={{ duration: 0.5 }}
     >
       <div className="results-header-pro">
-        <h2>Career Recommendations</h2>
-        <p>Based on your profile, interests and academic background.</p>
+        <h2>Top Career Matches</h2>
+        <p>
+          Your top {results.length} recommendations based on your profile, interests and academic background.
+        </p>
       </div>
 
       <div className="results-grid">
         {results.map((career, index) => (
-          <CareerCard key={career.id} career={career} rank={index + 1} />
+          <CareerCard
+            key={career.id}
+            career={career}
+            rank={index + 1}
+            isSaved={isSaved(career.id)}
+            onToggleSave={toggleSave}
+          />
         ))}
       </div>
 
-      <div className="results-actions">
-        <button
-          className="btn btn-primary"
-          onClick={() => navigate('/roadmap')}
-        >
-          <span>View Detailed Roadmap</span>
-          <ArrowRight size={18} />
-        </button>
-        <button
-          className="btn btn-secondary"
-          onClick={resetForm}
-        >
-          <RotateCcw size={18} />
-          <span>Start New Assessment</span>
-        </button>
-      </div>
+      {onRestart && (
+        <div className="results-actions">
+          <Button variant="secondary" onClick={onRestart} icon={RotateCcw}>
+            Start New Assessment
+          </Button>
+        </div>
+      )}
     </motion.div>
   );
 };

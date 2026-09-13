@@ -80,7 +80,7 @@ function Home() {
             <div className="hero-buttons">
               <button
                 className="btn btn-primary"
-                onClick={() => navigate('/career-recommendation')}
+                onClick={() => navigate('/career-discovery')}
               >
                 <span>Explore Your Future</span>
                 <ArrowRight size={18} />

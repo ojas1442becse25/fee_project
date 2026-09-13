@@ -1,0 +1,341 @@
+/* ---------------------------------------------------------------
+   Career Details page (/career/:careerSlug)
+   --------------------------------------------------------------- */
+
+/* .container-narrow / .stream-tags are normally provided by the
+   Career Discovery page CSS, but this page loads on its own. */
+.container-narrow {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.stream-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.stream-tag {
+  display: inline-block;
+  padding: 0.375rem 0.875rem;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.career-detail-page {
+  padding: 6.5rem 0 4rem;
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--background) 0%, #151b3b 100%);
+}
+
+/* Slightly wider than the assessment container */
+.career-detail-page .container-narrow {
+  max-width: 860px;
+}
+
+/* Back link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text);
+  opacity: 0.7;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.back-link:hover {
+  opacity: 1;
+  color: var(--accent);
+}
+
+/* Header card */
+.detail-header {
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.detail-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.detail-category {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.detail-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.detail-description {
+  color: var(--text);
+  opacity: 0.85;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* Personalized match note */
+.detail-personal {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(37, 99, 235, 0.07);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 14px;
+}
+
+.personal-score {
+  flex-shrink: 0;
+  text-align: center;
+  min-width: 76px;
+}
+
+.personal-score-num {
+  display: block;
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.15;
+}
+
+.personal-score-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+}
+
+.personal-text {
+  min-width: 0;
+}
+
+.personal-reason-detail {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.55;
+  margin-bottom: 0.625rem;
+}
+
+.personal-tags {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 0;
+  margin: 0;
+}
+
+.personal-tags li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text);
+  opacity: 0.85;
+}
+
+.personal-tags svg {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: var(--success);
+}
+
+/* Key metrics row */
+.detail-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.detail-metric {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.metric-icon {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.detail-metric-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+}
+
+.detail-metric-value {
+  display: block;
+  font-weight: 600;
+  color: var(--text);
+  font-size: 1.0625rem;
+}
+
+/* Generic sections */
+.detail-section {
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 1.75rem 2rem;
+  margin-top: 1.5rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  margin-bottom: 1.25rem;
+  color: var(--text);
+}
+
+.heading-icon {
+  color: var(--accent);
+}
+
+.detail-outlook {
+  color: var(--text);
+  opacity: 0.85;
+  line-height: 1.7;
+}
+
+/* Roadmap */
+.roadmap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.roadmap-step {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.roadmap-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.roadmap-index {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+.roadmap-content {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+
+.roadmap-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.roadmap-stage {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.roadmap-duration {
+  font-size: 0.8125rem;
+  color: var(--accent);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.roadmap-detail {
+  color: var(--text);
+  opacity: 0.75;
+  font-size: 0.9375rem;
+}
+
+/* Bottom CTA */
+.detail-cta {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(124, 58, 237, 0.15));
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  border-radius: 20px;
+  padding: 1.75rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: var(--text);
+}
+
+.detail-cta p {
+  flex: 1;
+  min-width: 200px;
+  opacity: 0.9;
+}
+
+.detail-cta .btn {
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .detail-header {
+    padding: 1.5rem;
+  }
+
+  .detail-metrics {
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
+  }
+
+  .detail-header-top {
+    flex-direction: column;
+  }
+}

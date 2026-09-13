@@ -1,7 +1,18 @@
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import OptionCard from '../ui/OptionCard';
+import { assessmentQuestions } from '../../data/assessmentQuestions';
 
-const AboutYouStep = ({ formData, updateForm }) => {
-  const educationLevels = ['10th', '11th', '12th', 'College'];
+// Step 1 - "About You"
+// Demonstrates: useRef (auto-focus), useEffect, controlled inputs,
+// rendering a list from a data file, and receiving handlers as props.
+const AboutYouStep = ({ formData, updateForm, selectOption }) => {
+  const nameInputRef = useRef(null);
+  const educationLevels = assessmentQuestions.find((q) => q.id === 'about-you').educationLevels;
+
+  // Automatically focus the name input when the assessment starts.
+  useEffect(() => {
+    nameInputRef.current?.focus();
+  }, []);
 
   return (
     <div className="question-section">
@@ -9,7 +20,9 @@ const AboutYouStep = ({ formData, updateForm }) => {
 
       <div className="question-group">
         <label className="question-label">What should we call you?</label>
+        {/* Controlled input: value comes from formData, onChange updates it */}
         <input
+          ref={nameInputRef}
           type="text"
           placeholder="Your name"
           value={formData.name || ''}
@@ -22,15 +35,13 @@ const AboutYouStep = ({ formData, updateForm }) => {
         <label className="question-label">Where are you currently in your education?</label>
         <div className="selection-cards">
           {educationLevels.map((level) => (
-            <motion.button
+            <OptionCard
               key={level}
-              className={`selection-card ${formData.class === level ? 'selected' : ''}`}
-              onClick={() => updateForm({ class: level })}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {level}
-            </motion.button>
+              label={level}
+              variant="selection"
+              selected={formData.class === level}
+              onSelect={() => selectOption('class', level)}
+            />
           ))}
         </div>
       </div>

@@ -1,17 +1,20 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, Menu, X, ArrowRight } from 'lucide-react'
+import { Sparkles, Menu, X, ArrowRight, LayoutDashboard, LogOut, LogIn } from 'lucide-react'
+import { useAuth } from '../../context/AuthContext'
 import './Navbar.css'
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
 
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Features', path: '/features' },
-    { name: 'Career Path', path: '/career-recommendation' },
+    { name: 'Career Discovery', path: '/career-discovery' },
     { name: 'FAQ', path: '/faq' },
   ]
 
@@ -22,6 +25,67 @@ function Navbar() {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false)
   }
+
+  const handleLogout = () => {
+    logout()
+    closeMobileMenu()
+    navigate('/')
+  }
+
+  // The "Actions" column is auth-aware:
+  //   - logged out: Login button + Get Started CTA
+  //   - logged in: Dashboard link + Log Out button
+  const desktopActions = user ? (
+    <div className="navbar-actions">
+      <NavLink to="/dashboard" className="btn-login">
+        <LayoutDashboard size={18} />
+        <span>Dashboard</span>
+      </NavLink>
+      <button className="btn-cta" onClick={handleLogout}>
+        <LogOut size={18} />
+        <span>Log Out</span>
+      </button>
+    </div>
+  ) : (
+    <div className="navbar-actions">
+      <NavLink to="/login" className="btn-login">
+        <LogIn size={18} />
+        <span>Login</span>
+      </NavLink>
+      <NavLink to="/career-discovery" className="btn-cta">
+        <span>Get Started</span>
+        <ArrowRight size={18} />
+      </NavLink>
+    </div>
+  )
+
+  const mobileActions = user ? (
+    <div className="mobile-actions">
+      <NavLink to="/dashboard" className="btn-cta-mobile" onClick={closeMobileMenu}>
+        <LayoutDashboard size={18} />
+        <span>Dashboard</span>
+      </NavLink>
+      <button className="btn-login-mobile" onClick={handleLogout}>
+        <LogOut size={18} />
+        <span>Log Out</span>
+      </button>
+    </div>
+  ) : (
+    <div className="mobile-actions">
+      <NavLink to="/login" className="btn-login-mobile" onClick={closeMobileMenu}>
+        <LogIn size={18} />
+        <span>Login</span>
+      </NavLink>
+      <NavLink
+        to="/career-discovery"
+        className="btn-cta-mobile"
+        onClick={closeMobileMenu}
+      >
+        <span>Get Started</span>
+        <ArrowRight size={18} />
+      </NavLink>
+    </div>
+  )
 
   return (
     <>
@@ -54,13 +118,7 @@ function Navbar() {
           </div>
 
           {/* Desktop Actions */}
-          <div className="navbar-actions">
-            <button className="btn-login">Login</button>
-            <NavLink to="/career-recommendation" className="btn-cta">
-              <span>Get Started</span>
-              <ArrowRight size={18} />
-            </NavLink>
-          </div>
+          {desktopActions}
 
           {/* Mobile Menu Button */}
           <button
@@ -120,19 +178,7 @@ function Navbar() {
                 </div>
 
                 {/* Mobile Actions */}
-                <div className="mobile-actions">
-                  <button className="btn-login-mobile" onClick={closeMobileMenu}>
-                    Login
-                  </button>
-                  <NavLink
-                    to="/career-recommendation"
-                    className="btn-cta-mobile"
-                    onClick={closeMobileMenu}
-                  >
-                    <span>Get Started</span>
-                    <ArrowRight size={18} />
-                  </NavLink>
-                </div>
+                {mobileActions}
               </div>
             </motion.div>
           </>
