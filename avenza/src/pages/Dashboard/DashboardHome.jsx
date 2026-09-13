@@ -5,6 +5,7 @@ import { Sparkles, ArrowRight, Bookmark, User, Rocket, TrendingUp, MapPin } from
 import { useAuth } from '../../context/AuthContext';
 import useSavedCareers from '../../hooks/useSavedCareers';
 import { calculateMatches } from '../../utils/careerMatcher';
+import CareerInsight from '../../components/ui/CareerInsight';
 
 // DashboardHome
 // -------------
@@ -83,6 +84,9 @@ const DashboardHome = () => {
           <ArrowRight size={16} />
         </Link>
       </div>
+
+      {/* Daily Career Inspiration — Demonstrates Fetch API, Promises, async/await, useEffect, and conditional rendering */}
+      <CareerInsight />
 
       {/* Your Career Journey — data always comes from the stored assessment. */}
       <div className="journey">
