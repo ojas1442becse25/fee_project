@@ -16,10 +16,10 @@
 
 .hero-container {
   display: grid;
-  grid-template-columns: 1.15fr 0.95fr;
-  gap: clamp(32px, 5vw, 64px);
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(24px, 4vw, 52px);
   align-items: center;
-  max-width: 1240px;
+  max-width: 1280px;
   width: 100%;
   margin: 0 auto;
   padding: 0 24px;
@@ -207,13 +207,13 @@
   transform: translateY(3px);
 }
 
-/* ── Trust Row ── */
+/* ── Trust Row (Clean symmetrical 2-column grid) ── */
 .hero-trust-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  gap: 0.65rem 1.25rem;
+  max-width: 500px;
+  width: 100%;
 }
 
 .trust-badge {
@@ -300,6 +300,7 @@
 
   .hero-trust-row {
     justify-content: center;
+    margin: 0 auto;
   }
 
   .hero-visual-wrapper {
@@ -336,7 +337,9 @@
   }
 
   .hero-trust-row {
-    gap: 0.75rem;
-    justify-content: center;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    max-width: 280px;
+    margin: 0 auto;
   }
 }

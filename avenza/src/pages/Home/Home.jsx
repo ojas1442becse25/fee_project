@@ -9,7 +9,7 @@ import {
   ShieldCheck,
   CheckCircle,
 } from 'lucide-react'
-import HeroVisual from '../../components/home/HeroVisual'
+import CareerGalaxy3D from '../../components/home/CareerGalaxy3D'
 import StatsSection from '../../components/home/StatsSection'
 import FeaturesSection from '../../components/home/FeaturesSection'
 import HowItWorks from '../../components/home/HowItWorks'
@@ -142,9 +142,9 @@ function Home() {
             </motion.div>
           </motion.div>
 
-          {/* ── Right: 3D Visual Console ── */}
+          {/* ── Right: 3D Career Galaxy Visual ── */}
           <div className="hero-visual-wrapper">
-            <HeroVisual />
+            <CareerGalaxy3D />
           </div>
         </div>
       </section>

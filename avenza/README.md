@@ -2,7 +2,7 @@
 
 Avenza is a React single-page application that helps students discover, compare, and save career paths. Users complete a guided multi-step **Career Discovery** assessment, get their **Top 3 career matches**, browse a dynamic career detail page, and save careers to a personal dashboard.
 
-**Stack:** React 19 + Vite · React Router 7 · Framer Motion · lucide-react icons · No backend (data + auth live in the browser/localStorage).
+**Stack:** React 19 + Vite · React Router 7 · Three.js (WebGL) · Framer Motion · lucide-react icons · No backend (data + auth live in the browser/localStorage).
 
 **How data is stored (all frontend-only, four keys):**
 
@@ -64,7 +64,7 @@ Every concept is used **in the real app flow** — nothing is decorative. Each r
 
 | # | Concept | Where Avenza uses it | File(s) |
 |---|---------|----------------------|---------|
-| 1 | **React components** | The whole UI is split into small components: every `.jsx` under `components/` and `pages/` (Navbar, HeroVisual, CareerCard, FormStep, DashboardLayout…). | `src/components/**`, `src/pages/**` |
+| 1 | **React components** | The whole UI is split into small components: every `.jsx` under `components/` and `pages/` (Navbar, CareerGalaxy3D, CareerCard, FormStep, DashboardLayout…). | `src/components/**`, `src/pages/**` |
 | 2 | **JSX** | HTML-like markup returned from components — `return ( <button>…</button> )` throughout the app. | any `.jsx`, e.g. `components/ui/Button.jsx` |
 | 3 | **Props** | `OptionCard` receives `label/description/icon/selected/onSelect/variant`; `CareerCard` receives `career/rank/isSaved/onToggleSave`; every assessment step receives `formData` + handlers. | `components/ui/OptionCard.jsx`, `components/career/CareerCard.jsx` |
 | 4 | **State** | Component state lives in `useState` across the app — navbar menu open/closed, expanded cards, auth user, assessment answers, login form fields. | `components/layout/Navbar.jsx`, `components/career/CareerCard.jsx`, `hooks/useCareerAssessment.js` |
