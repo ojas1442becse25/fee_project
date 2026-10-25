@@ -1,55 +1,132 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Sparkles, RefreshCw, AlertCircle } from 'lucide-react';
+
+/**
+ * Fallback quotes if external API is unreachable or offline
+ */
+const FALLBACK_QUOTES = [
+  {
+    quote: "The future depends on what you do today.",
+    author: "Mahatma Gandhi"
+  },
+  {
+    quote: "Choose a job you love, and you will never have to work a day in your life.",
+    author: "Confucius"
+  },
+  {
+    quote: "Opportunities don't happen. You create them.",
+    author: "Chris Grosser"
+  },
+  {
+    quote: "The only way to do great work is to love what you do.",
+    author: "Steve Jobs"
+  }
+];
 
 /**
  * CareerInsight Component
  * -----------------------
- * Demonstrates key JavaScript syllabus requirements:
+ * Demonstrates key JavaScript & React syllabus requirements:
  * 1. Fetch API - standard web API for making HTTP requests
  * 2. Promises & async/await - handling asynchronous operations cleanly
- * 3. useEffect hook - executing side-effects on component mount
- * 4. Loading state - tracking request progress
- * 5. Error handling - try/catch block for network or parsing errors
- * 6. Conditional rendering - showing loading spinner, error message with retry, or successful data
+ * 3. useEffect hook with cleanup - lifecycle management and AbortController
+ * 4. Loading state - tracking request progress and preventing duplicate clicks
+ * 5. Error handling - try/catch/finally block for network or parsing errors
+ * 6. Conditional rendering - loading spinner, error message with retry, and quote data
  */
 export default function CareerInsight() {
   const [insight, setInsight] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const activeControllerRef = useRef(null);
 
-  // Async function demonstrating Fetch API, Promises, and try/catch error handling
-  const fetchInsight = async () => {
+  // useEffect runs on mount: declares async data fetcher inside effect with AbortController
+  useEffect(() => {
+    let ignore = false;
+    const controller = new AbortController();
+    activeControllerRef.current = controller;
+
+    async function loadInitialInsight() {
+      try {
+        const response = await fetch('https://dummyjson.com/quotes/random', {
+          signal: controller.signal
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (!ignore) {
+          setInsight({
+            quote: data.quote,
+            author: data.author
+          });
+          setError(null);
+        }
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+
+        console.warn('Initial quote fetch failed, using fallback quote:', err);
+        if (!ignore) {
+          const randomFallback = FALLBACK_QUOTES[Math.floor(Math.random() * FALLBACK_QUOTES.length)];
+          setInsight(randomFallback);
+          setError('Live quote network request failed, loaded offline inspiration.');
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadInitialInsight();
+
+    return () => {
+      ignore = true;
+      controller.abort();
+    };
+  }, []);
+
+  // Safe manual refresh handler triggered by user action
+  const handleRefresh = useCallback(async () => {
+    if (loading) return; // Prevent duplicate concurrent requests
+
     setLoading(true);
     setError(null);
 
+    if (activeControllerRef.current) {
+      activeControllerRef.current.abort();
+    }
+    const controller = new AbortController();
+    activeControllerRef.current = controller;
+
     try {
-      // Using a public quotes API (dummyjson) that returns inspiring quotes
-      const response = await fetch('https://dummyjson.com/quotes/random');
+      const response = await fetch('https://dummyjson.com/quotes/random', {
+        signal: controller.signal
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      // Parsing JSON response (returns a Promise resolved by await)
       const data = await response.json();
       setInsight({
         quote: data.quote,
         author: data.author
       });
+      setError(null);
     } catch (err) {
-      // Catch network failure or JSON parse errors
-      console.error('Failed to fetch daily insight:', err);
-      setError(err.message || 'Unable to load daily insight at this moment.');
+      if (err.name === 'AbortError') return;
+
+      console.warn('Refresh quote fetch failed, using fallback quote:', err);
+      const randomFallback = FALLBACK_QUOTES[Math.floor(Math.random() * FALLBACK_QUOTES.length)];
+      setInsight(randomFallback);
+      setError('Live quote refresh failed, loaded offline inspiration.');
     } finally {
-      // Set loading to false once the Promise settles (either resolved or rejected)
       setLoading(false);
     }
-  };
-
-  // useEffect runs the async fetch function when component mounts
-  useEffect(() => {
-    fetchInsight();
-  }, []);
+  }, [loading]);
 
   return (
     <div className="career-insight-card">
@@ -60,13 +137,13 @@ export default function CareerInsight() {
         </div>
         <button
           className="career-insight-refresh"
-          onClick={fetchInsight}
+          onClick={handleRefresh}
           disabled={loading}
           title="Get new insight"
           aria-label="Refresh insight"
         >
           <RefreshCw size={15} className={loading ? 'spinning' : ''} />
-          <span>New Quote</span>
+          <span>{loading ? 'Fetching...' : 'New Quote'}</span>
         </button>
       </div>
 
@@ -80,16 +157,16 @@ export default function CareerInsight() {
         )}
 
         {!loading && error && (
-          <div className="career-insight-error">
-            <AlertCircle size={18} className="error-icon" />
+          <div className="career-insight-error" style={{ marginBottom: '0.75rem' }}>
+            <AlertCircle size={16} className="error-icon" />
             <span>{error}</span>
-            <button className="insight-retry-btn" onClick={fetchInsight}>
-              Retry
+            <button className="insight-retry-btn" onClick={handleRefresh} disabled={loading}>
+              Retry Live
             </button>
           </div>
         )}
 
-        {!loading && !error && insight && (
+        {!loading && insight && (
           <div className="career-insight-quote-box">
             <blockquote className="career-insight-quote">
               &ldquo;{insight.quote}&rdquo;

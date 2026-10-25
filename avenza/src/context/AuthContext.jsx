@@ -20,12 +20,16 @@ export function AuthProvider({ children }) {
     });
   }, [setUser]);
 
+  const updateUser = useCallback((updatedFields) => {
+    setUser((prev) => (prev ? { ...prev, ...updatedFields } : updatedFields));
+  }, [setUser]);
+
   const logout = useCallback(() => {
     setUser(null);
   }, [setUser]);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

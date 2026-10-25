@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight, Bookmark, User, Rocket, TrendingUp, MapPin } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useCareerContext } from '../../context/CareerContext';
 import useSavedCareers from '../../hooks/useSavedCareers';
 import { calculateMatches } from '../../utils/careerMatcher';
 import CareerInsight from '../../components/ui/CareerInsight';
@@ -11,22 +12,11 @@ import CareerInsight from '../../components/ui/CareerInsight';
 // -------------
 // The default view inside the dashboard (index route).
 // Provides a welcome message, quick stats, shortcuts, and a
-// "Your Career Journey" panel built from the user's *real* stored data.
+// "Your Career Journey" panel built from the user's real stored data.
 const DashboardHome = () => {
   const { user } = useAuth();
+  const { profile } = useCareerContext();
   const { savedCareers } = useSavedCareers();
-
-  // Restore the latest completed assessment from the shared store. This is
-  // the SAME profile the results page reads, so the journey below can never
-  // show a statistic we did not actually produce.
-  const [profile] = useState(() => {
-    try {
-      const raw = localStorage.getItem('avenza_profile');
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
-    }
-  });
 
   // useMemo: the top match only recomputes when the stored profile changes.
   const topMatch = useMemo(() => {

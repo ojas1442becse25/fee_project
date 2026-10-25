@@ -1,97 +1,168 @@
+/* ==========================================================================
+   Footer — Refined Luxury Conclusion
+   ========================================================================== */
+
 .footer {
-  background: rgba(255, 255, 255, 0.02);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 2.5rem 0 2rem;
-  margin-top: 0;
+  background: rgba(10, 15, 32, 0.85);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 4rem 0 2.5rem;
+  position: relative;
+  z-index: 2;
 }
 
 .footer-content {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 3rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 3.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .footer-brand {
-  flex: 1;
+  max-width: 360px;
 }
 
 .footer-logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  gap: 0.55rem;
+  text-decoration: none;
+  margin-bottom: 0.85rem;
 }
 
-.footer-logo-icon {
-  color: var(--accent);
+.footer-logo-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a1e3a 100%);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .footer-logo-text {
-  font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
 }
 
 .footer-tagline {
-  font-size: 0.9375rem;
-  color: var(--text);
-  opacity: 0.7;
+  font-size: 0.9rem;
+  font-weight: 650;
+  color: rgba(248, 250, 252, 0.9);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.01em;
 }
 
+.footer-subtext {
+  font-size: 0.825rem;
+  color: rgba(248, 250, 252, 0.55);
+  line-height: 1.5;
+}
+
+/* Nav */
 .footer-nav {
   display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.footer-nav-title {
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.5);
+}
+
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 2.5rem;
 }
 
 .footer-link {
-  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: rgba(248, 250, 252, 0.7);
   text-decoration: none;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  opacity: 0.8;
+  font-size: 0.875rem;
+  font-weight: 550;
+  transition: all 0.2s ease;
+}
+
+.footer-link-arrow {
+  opacity: 0;
+  transform: translate(-2px, 2px);
+  transition: all 0.2s ease;
+  color: #38bdf8;
 }
 
 .footer-link:hover {
-  color: white;
-  opacity: 1;
+  color: #ffffff;
 }
 
+.footer-link:hover .footer-link-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Bottom Bar */
 .footer-bottom {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
 }
 
 .footer-copyright {
-  font-size: 0.875rem;
-  color: var(--text);
-  opacity: 0.6;
+  font-size: 0.8rem;
+  color: rgba(248, 250, 252, 0.5);
 }
 
-@media (max-width: 768px) {
-  .footer {
-    padding: 2rem 0 1.5rem;
-  }
+.footer-status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(248, 250, 252, 0.6);
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+}
 
+.status-ping {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 6px #34d399;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
     gap: 2rem;
+  }
+
+  .footer-brand {
+    max-width: 100%;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
     text-align: center;
-  }
-
-  .footer-logo {
-    justify-content: center;
-  }
-
-  .footer-nav {
-    justify-content: center;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 }

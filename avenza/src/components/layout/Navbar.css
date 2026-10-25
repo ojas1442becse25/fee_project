@@ -1,211 +1,418 @@
-/* Navbar Container */
+/* ==========================================================================
+   AVENZA Navbar — Clean Professional Navigation
+   ========================================================================== */
+
+/* Base Navbar: fixed top, transparent on home hero */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 1rem 0;
+  padding: 1rem 1.5rem;
+  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.navbar-container {
-  max-width: 1400px;
+/* Scrolled state: compact */
+.navbar.navbar-scrolled {
+  padding: 0.55rem 1.5rem;
+}
+
+/* Inner container: the floating pill */
+.navbar-inner {
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(248, 250, 252, 0.1);
-  border-radius: 16px;
-  padding: 1rem 1.5rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  gap: 1.5rem;
+  background: rgba(10, 14, 30, 0.55);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 0.6rem 1.15rem 0.6rem 0.95rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    padding 0.3s ease;
 }
 
-/* Logo */
+.navbar.navbar-home:not(.navbar-scrolled) .navbar-inner {
+  background: rgba(10, 14, 30, 0.4);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+}
+
+.navbar.navbar-scrolled .navbar-inner {
+  background: rgba(8, 12, 28, 0.92);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+
+/* ==========================================================================
+   Logo — Professional Uppercase Wordmark
+   ========================================================================== */
 .navbar-logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   text-decoration: none;
-  font-size: 1.5rem;
-  font-weight: 700;
-  transition: all 0.3s ease;
-}
-
-.logo-icon {
-  color: var(--accent);
-}
-
-.logo-text {
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
 }
 
 .navbar-logo:hover {
-  transform: translateY(-2px);
+  opacity: 0.85;
 }
 
-/* Desktop Navigation Links */
+.logo-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a1e3a 100%);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   Desktop Navigation Links
+   ========================================================================== */
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.15rem;
   flex: 1;
   justify-content: center;
 }
 
 .nav-link {
-  color: var(--text);
-  text-decoration: none;
-  padding: 0.625rem 1rem;
-  border-radius: 10px;
-  font-weight: 500;
-  font-size: 0.9375rem;
-  transition: all 0.3s ease;
   position: relative;
+  color: rgba(248, 250, 252, 0.65);
+  text-decoration: none;
+  padding: 0.5rem 0.85rem;
+  border-radius: 9px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: color 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 20px;
+  height: 2px;
+  border-radius: 1px;
+  background: #60a5fa;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-link:hover {
+  color: #ffffff;
   background: rgba(255, 255, 255, 0.05);
-  color: white;
+}
+
+.nav-link:hover::after {
+  transform: translateX(-50%) scaleX(1);
 }
 
 .nav-link-active {
-  background: rgba(37, 99, 235, 0.15);
-  color: white;
-  box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+  color: #ffffff !important;
+  background: rgba(96, 165, 250, 0.1);
 }
 
-/* Desktop Actions */
+.nav-link-active::after {
+  transform: translateX(-50%) scaleX(1) !important;
+}
+
+/* Dropdown Trigger */
+.nav-dropdown-wrapper {
+  position: relative;
+}
+
+.nav-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.dropdown-chevron {
+  color: rgba(255, 255, 255, 0.4);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-chevron.open {
+  transform: rotate(180deg);
+  color: #60a5fa;
+}
+
+/* Dropdown Panel */
+.nav-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 200px;
+  background: rgba(11, 16, 38, 0.96);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 0.5rem;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  z-index: 100;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 0.65rem 0.875rem;
+  color: rgba(248, 250, 252, 0.75);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 9px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.dropdown-item:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.dropdown-item-active {
+  color: #60a5fa !important;
+  background: rgba(96, 165, 250, 0.08);
+}
+
+/* ==========================================================================
+   Desktop Action Buttons
+   ========================================================================== */
 .navbar-actions {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
+  flex-shrink: 0;
 }
 
-.btn-login {
+.btn-ghost {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
+  gap: 0.45rem;
+  padding: 0.5rem 0.875rem;
   background: transparent;
-  border: 1px solid rgba(248, 250, 252, 0.2);
-  color: var(--text);
-  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(248, 250, 252, 0.75);
+  border-radius: 9px;
   font-weight: 500;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   font-family: inherit;
   text-decoration: none;
+  white-space: nowrap;
 }
 
-.btn-login:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(248, 250, 252, 0.3);
-  color: white;
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
 }
 
-.btn-cta {
+.saved-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: #60a5fa;
+  color: #0a0e1e;
+  border-radius: 999px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.btn-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  background: #2563eb;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 9px;
   font-weight: 600;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.3);
+  font-family: inherit;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
 }
 
-.btn-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+.btn-nav-cta:hover {
+  background: #3b82f6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45);
 }
 
-/* Mobile Menu Button */
+.btn-nav-cta:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Mobile Hamburger
+   ========================================================================== */
 .mobile-menu-button {
   display: none;
-  background: transparent;
-  border: none;
-  color: var(--text);
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+  color: rgba(248, 250, 252, 0.85);
   cursor: pointer;
-  padding: 0.5rem;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .mobile-menu-button:hover {
-  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
-/* Mobile Menu Backdrop */
+.mobile-menu-button span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Mobile Menu Backdrop + Drawer
+   ========================================================================== */
 .mobile-menu-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1001;
 }
 
-/* Mobile Menu Panel */
 .mobile-menu {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
-  width: min(320px, 85vw);
-  background: rgba(15, 23, 42, 0.98);
-  backdrop-filter: blur(20px);
-  border-left: 1px solid rgba(248, 250, 252, 0.1);
+  width: min(320px, 88vw);
+  background: rgba(10, 15, 35, 0.98);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-left: 1px solid rgba(255, 255, 255, 0.09);
   z-index: 1002;
   overflow-y: auto;
-  box-shadow: -4px 0 30px rgba(0, 0, 0, 0.5);
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.65);
 }
 
 .mobile-menu-content {
-  padding: 5rem 1.5rem 2rem;
+  padding: 1.5rem 1.25rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.75rem;
+  min-height: 100%;
 }
 
-/* Mobile Navigation Links */
+.mobile-menu-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Mobile Nav Links */
 .mobile-nav-links {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 
 .mobile-nav-link {
-  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgba(248, 250, 252, 0.8);
   text-decoration: none;
-  padding: 1rem 1.25rem;
+  padding: 0.875rem 1rem;
   border-radius: 12px;
   font-weight: 500;
-  font-size: 1.125rem;
-  transition: all 0.3s ease;
-  display: block;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
 }
 
 .mobile-nav-link:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: white;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
 }
 
 .mobile-nav-link-active {
-  background: rgba(37, 99, 235, 0.15);
-  color: white;
-  box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+  background: rgba(96, 165, 250, 0.12) !important;
+  color: #93c5fd !important;
+}
+
+.mobile-nav-section-label {
+  font-size: 0.9375rem;
+  color: rgba(248, 250, 252, 0.65);
+}
+
+.mobile-dropdown-children {
+  overflow: hidden;
+  padding-left: 0.75rem;
+}
+
+.mobile-child-link {
+  font-size: 0.9375rem;
+  color: rgba(248, 250, 252, 0.7);
+  padding: 0.75rem 1rem;
+}
+
+.mobile-child-link:hover {
+  color: #60a5fa;
 }
 
 /* Mobile Actions */
@@ -213,85 +420,112 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(248, 250, 252, 0.1);
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  margin-top: auto;
 }
 
-.btn-login-mobile {
+.btn-mobile-ghost {
   width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   padding: 0.875rem 1.25rem;
-  background: transparent;
-  border: 1px solid rgba(248, 250, 252, 0.2);
-  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(248, 250, 252, 0.85);
   border-radius: 12px;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   font-family: inherit;
   text-decoration: none;
 }
 
-.btn-login-mobile:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(248, 250, 252, 0.3);
-  color: white;
+.btn-mobile-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
 }
 
-.btn-cta-mobile {
+.btn-mobile-cta {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   padding: 0.875rem 1.25rem;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: #2563eb;
   color: white;
   border: none;
   border-radius: 12px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+  font-family: inherit;
 }
 
-.btn-cta-mobile:hover {
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+.btn-mobile-cta:hover {
+  background: #3b82f6;
+  box-shadow: 0 6px 22px rgba(37, 99, 235, 0.45);
 }
 
-/* Responsive Design */
-@media (max-width: 968px) {
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .navbar-links {
+    gap: 0;
+  }
+  .nav-link {
+    padding: 0.5rem 0.65rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 900px) {
   .navbar-links,
   .navbar-actions {
     display: none;
   }
-
   .mobile-menu-button {
-    display: block;
+    display: flex;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .navbar {
-    padding: 0.75rem 0;
+    padding: 0.75rem 0.875rem;
   }
-
-  .navbar-container {
-    padding: 0.75rem 1rem;
+  .navbar.navbar-scrolled {
+    padding: 0.5rem 0.875rem;
   }
-
-  .navbar-logo {
-    font-size: 1.25rem;
+  .navbar-inner {
+    padding: 0.55rem 0.875rem;
+    border-radius: 13px;
   }
+  .logo-text {
+    font-size: 1.05rem;
+  }
+}
 
-  .logo-icon {
-    width: 20px;
-    height: 20px;
+/* ==========================================================================
+   Accessibility & Reduced Motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navbar-inner,
+  .nav-link,
+  .nav-link::after,
+  .btn-nav-cta,
+  .btn-ghost {
+    transition: none !important;
+  }
+  .dropdown-chevron {
+    transition: none !important;
   }
 }

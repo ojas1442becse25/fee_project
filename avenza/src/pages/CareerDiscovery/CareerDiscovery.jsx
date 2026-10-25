@@ -11,24 +11,25 @@ import ProfileSummary from '../../components/career/ProfileSummary';
 import LoadingScreen from '../../components/ui/LoadingScreen';
 import useCareerAssessment from '../../hooks/useCareerAssessment';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
+import { useCareerContext } from '../../context/CareerContext';
 import './CareerDiscovery.css';
 import './CareerDiscoveryEnhanced.css';
 
 // CareerDiscovery
 // ---------------
 // Host page for the multi-step career assessment. All form state lives
-// in the useCareerAssessment custom hook (lifting state up) and is passed
-// to the step components through props.
+// in the useCareerAssessment custom hook (demonstrating local vs global state)
+// and is passed to the step components through props.
 //
 // On the final step the user clicks "Find My Career Matches":
 //   1. validates the completed profile
-//   2. saves it to localStorage (key: avenza_profile, the single source
-//      of truth shared with My Profile / Results / Details / Dashboard)
-//   3. shows a short analyzing transition
-//   4. navigates to the /career/results route
+//   2. saves it to CareerContext + localStorage (single source of truth)
+//   3. shows a short analyzing transition (with cleanup)
+//   4. navigates to /career/results
 const CareerDiscovery = () => {
   useDocumentTitle('Career Discovery | Avenza');
   const navigate = useNavigate();
+  const { saveProfile, profile: existingProfile } = useCareerContext();
 
   const {
     currentStep,
@@ -43,6 +44,16 @@ const CareerDiscovery = () => {
   } = useCareerAssessment();
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const timerRef = useRef(null);
+
+  // Clean up any pending navigation timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
 
   // useRef to scroll the step container into view when the step changes.
   const stepTopRef = useRef(null);
@@ -52,13 +63,11 @@ const CareerDiscovery = () => {
     stepTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, [currentStep]);
 
-  // useCallback: stable handler so ProfileSummary is not re-rendered
-  // unnecessarily. Submits the profile, shows the analyzing state, then
-  // moves on to the results page.
+  // useCallback: stable handler so ProfileSummary is not re-rendered unnecessarily
   const handleSubmit = useCallback(() => {
-    // 1. Validate the completed profile. Every step gates on canContinue,
-    //    so this is a safety net - it guarantees the summary is complete
-    //    before we ever navigate away.
+    if (isAnalyzing) return; // Prevent duplicate concurrent submissions
+
+    // 1. Validate the completed profile
     const hasInterests = (formData.interests || []).length > 0;
     const hasSkills = (formData.skills || []).length > 0;
     const requiredFields = ['name', 'class', 'stream', 'careerGoal', 'entranceExam'];
@@ -67,35 +76,24 @@ const CareerDiscovery = () => {
       hasInterests &&
       hasSkills;
 
-    if (!isComplete) return; // never submit an incomplete profile
+    if (!isComplete) return;
 
-    // 2. Persist the completed profile to a single shared store so the
-    //    results page, career details, dashboard and a page refresh can all
-    //    read it. We merge with any existing profile to preserve data the
-    //    user already entered elsewhere (e.g. their email in My Profile).
-    try {
-      const existingRaw = localStorage.getItem('avenza_profile');
-      const existing = existingRaw ? JSON.parse(existingRaw) : {};
-      const merged = {
-        ...existing,
-        ...formData,
-        // name from the assessment wins, email is kept from the stored profile
-        // when the assessment form did not collect one
-        email: existing.email || formData.email
-      };
-      localStorage.setItem('avenza_profile', JSON.stringify(merged));
-    } catch {
-      // localStorage unavailable - the in-memory state still works.
-    }
+    // 2. Persist to global CareerContext (which syncs to localStorage 'avenza_profile')
+    const merged = {
+      ...(existingProfile || {}),
+      ...formData,
+      email: existingProfile?.email || formData.email || ''
+    };
+    saveProfile(merged);
 
-    // 3. Short professional analyzing transition.
+    // 3. Short analyzing transition
     setIsAnalyzing(true);
 
-    // 4. Navigate to the dedicated results route once the analysis is done.
-    setTimeout(() => {
+    // 4. Navigate to dedicated recommendations route
+    timerRef.current = setTimeout(() => {
       navigate('/career/results');
-    }, 2000);
-  }, [formData, navigate]);
+    }, 1800);
+  }, [isAnalyzing, formData, existingProfile, saveProfile, navigate]);
 
   const renderStep = () => {
     switch (currentStep) {
@@ -141,10 +139,21 @@ const CareerDiscovery = () => {
               canGoBack={currentStep > 1}
               canContinue={canContinue}
             >
-              <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentStep}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  {renderStep()}
+                </motion.div>
+              </AnimatePresence>
             </FormStep>
           </>
         )}
+
 
         {isAnalyzing && <LoadingScreen />}
       </div>

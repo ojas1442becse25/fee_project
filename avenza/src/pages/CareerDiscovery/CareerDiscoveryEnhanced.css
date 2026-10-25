@@ -633,3 +633,194 @@
     text-align: center;
   }
 }
+
+/* ==========================================================================
+   Executive Breadcrumbs & Step Tracker Styles
+   ========================================================================== */
+.step-breadcrumbs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  overflow-x: auto;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  opacity: 0.5;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.breadcrumb-item.active {
+  opacity: 1;
+}
+
+.breadcrumb-item.completed {
+  opacity: 0.85;
+}
+
+.breadcrumb-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+}
+
+.breadcrumb-item.active .breadcrumb-dot {
+  background: var(--primary);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(37, 99, 235, 0.5);
+}
+
+.breadcrumb-item.completed .breadcrumb-dot {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+  color: #34d399;
+}
+
+.breadcrumb-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.breadcrumb-item.active .breadcrumb-label {
+  color: #ffffff;
+}
+
+.breadcrumb-item.completed .breadcrumb-label {
+  color: #cbd5e1;
+}
+
+/* Live Progress Bar Wrapper */
+.step-progress-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.step-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+}
+
+.step-title-highlight {
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.02em;
+}
+
+.step-pct {
+  color: #94a3b8;
+  font-family: monospace;
+}
+
+.step-progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.step-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #38bdf8, #818cf8);
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+/* Stepper & Preset Controls */
+.stepper-btn:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #38bdf8 !important;
+}
+
+.preset-pill:hover {
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+}
+
+/* Summary Chips Row */
+.summary-chips-row {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-chips-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.summary-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.summary-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.775rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+}
+
+.summary-chip.interest {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+}
+
+.summary-chip.strength {
+  background: rgba(124, 58, 237, 0.12);
+  border-color: rgba(192, 132, 252, 0.3);
+  color: #c084fc;
+}
+
+.summary-row-icon {
+  color: #38bdf8;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Glow CTA Button */
+.btn-glow {
+  box-shadow: 0 0 25px rgba(37, 99, 235, 0.45) !important;
+  position: relative;
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 35px rgba(37, 99, 235, 0.65) !important;
+  transform: translateY(-2px);
+}
+

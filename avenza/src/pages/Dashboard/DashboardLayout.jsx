@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, User, Bookmark, LogOut, Sparkles } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
@@ -11,8 +11,14 @@ import './Dashboard.css';
 // active child route (DashboardHome / ProfilePage / SavedCareers) mounts.
 const DashboardLayout = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   useDocumentTitle('Dashboard | Avenza');
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   const navItems = [
     { to: '/dashboard', end: true, label: 'Overview', icon: LayoutDashboard },
@@ -52,7 +58,7 @@ const DashboardLayout = () => {
               <span className="sidebar-user-name">{user?.name || 'User'}</span>
               <span className="sidebar-user-email">{user?.email || 'No email'}</span>
             </div>
-            <button className="sidebar-logout" onClick={logout}>
+            <button className="sidebar-logout" onClick={handleLogout}>
               <LogOut size={18} />
               <span>Log Out</span>
             </button>

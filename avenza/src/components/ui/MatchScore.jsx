@@ -9,7 +9,16 @@ const MatchScore = ({ score, size = 80, delay = 0, label = 'Match Score' }) => {
   const circumference = 2 * Math.PI * radius; // ≈ 213.628
 
   return (
-    <div className="match-circle-pro" style={{ width: size, height: size }}>
+    <div
+      className="match-circle-pro"
+      style={{ width: size, height: size }}
+      role="progressbar"
+      aria-valuenow={score}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-label={`${label}: ${score}%`}
+      title={`${label}: ${score}%`}
+    >
       <svg className="progress-ring" width={size} height={size}>
         <circle
           className="progress-ring-circle-bg"

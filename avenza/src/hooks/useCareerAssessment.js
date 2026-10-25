@@ -78,13 +78,28 @@ export function useCareerAssessment() {
   // Whether the current step has the required answer(s) to continue.
   const canContinue = (() => {
     switch (currentStep) {
-      case 1: return Boolean(formData.name && formData.class);
-      case 2: return Boolean(formData.stream && formData.marks);
-      case 3: return (formData.interests || []).length > 0;
-      case 4: return (formData.skills || []).length > 0;
-      case 5: return Boolean(formData.careerGoal && formData.entranceExam);
-      case 6: return true; // summary step
-      default: return false;
+      case 1:
+        return Boolean(formData.name && formData.name.trim().length > 0 && formData.class);
+      case 2: {
+        const marksNum = Number(formData.marks);
+        return Boolean(
+          formData.stream &&
+          formData.marks !== '' &&
+          !isNaN(marksNum) &&
+          marksNum >= 0 &&
+          marksNum <= 100
+        );
+      }
+      case 3:
+        return (formData.interests || []).length > 0;
+      case 4:
+        return (formData.skills || []).length > 0;
+      case 5:
+        return Boolean(formData.careerGoal && formData.entranceExam);
+      case 6:
+        return true; // summary step
+      default:
+        return false;
     }
   })();
 

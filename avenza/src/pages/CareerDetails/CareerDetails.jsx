@@ -1,9 +1,10 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { ArrowLeft, Bookmark, BookmarkCheck, GraduationCap, TrendingUp, Wallet, BarChart3, Sparkles, Check } from 'lucide-react';
 import { getCareerBySlug } from '../../data/careers';
 import { calculateMatches } from '../../utils/careerMatcher';
+import { useCareerContext } from '../../context/CareerContext';
 import useSavedCareers from '../../hooks/useSavedCareers';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
 import SkillTag from '../../components/ui/SkillTag';
@@ -21,18 +22,7 @@ const CareerDetails = () => {
   const career = getCareerBySlug(careerSlug);
 
   const { isSaved, toggleSave } = useSavedCareers();
-
-  // If the user has completed the assessment, their profile lives in the
-  // single shared store (avenza_profile). We re-run the matcher and show
-  // this specific career's personalized reason ("why it matches you").
-  const [submittedProfile] = useState(() => {
-    try {
-      const raw = localStorage.getItem('avenza_profile');
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
-    }
-  });
+  const { profile: submittedProfile } = useCareerContext();
 
   // Hook order is fixed: compute before the early return below.
   const matches = useMemo(

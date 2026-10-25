@@ -1,6 +1,14 @@
-import { motion } from 'framer-motion'
+import { useRef, useCallback } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { Sparkles, ArrowRight, PlayCircle } from 'lucide-react'
+import {
+  Sparkles,
+  ArrowRight,
+  ChevronDown,
+  TrendingUp,
+  ShieldCheck,
+  CheckCircle,
+} from 'lucide-react'
 import HeroVisual from '../../components/home/HeroVisual'
 import StatsSection from '../../components/home/StatsSection'
 import FeaturesSection from '../../components/home/FeaturesSection'
@@ -12,130 +20,184 @@ import Footer from '../../components/home/Footer'
 import './Home.css'
 import './HeroSection.css'
 
+const TRUST_BADGES = [
+  { icon: Sparkles, text: 'AI Fit Engine 2.0' },
+  { icon: TrendingUp, text: '50+ Career Roadmaps' },
+  { icon: ShieldCheck, text: '100% Free For Students' },
+  { icon: CheckCircle, text: 'No Sign-Up Needed' },
+]
+
 function Home() {
   const navigate = useNavigate()
+  const shouldReduceMotion = useReducedMotion()
+  const heroRef = useRef(null)
 
-  const scrollToHowItWorks = () => {
-    const element = document.getElementById('how-it-works')
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const scrollToHowItWorks = useCallback(() => {
+    const el = document.getElementById('how-it-works')
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
+  }, [])
+
+  // Staggered hero text entrance
+  const heroContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : { staggerChildren: 0.08, delayChildren: 0.05 },
+    },
+  }
+
+  const heroItemVariants = {
+    hidden: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+    },
   }
 
   return (
     <div className="home-page">
-      {/* Animated Background */}
-      <div className="home-background">
-        <motion.div
-          className="gradient-orb orb-1"
-          animate={{
-            x: [0, 80, 0],
-            y: [0, -80, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="gradient-orb orb-2"
-          animate={{
-            x: [0, -80, 0],
-            y: [0, 80, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+      {/* ──────────────────────────────────────────────────────────
+          Atmospheric Background Layer
+      ────────────────────────────────────────────────────────── */}
+      <div className="home-background" aria-hidden="true">
+        <div className="home-bg-grid" />
+        <div className="home-bg-vignette" />
+
+        {/* Ambient luminous glow nodes */}
+        <div className="ambient-glow glow-hero-top" />
+        <div className="ambient-glow glow-features-mid" />
+        <div className="ambient-glow glow-cta-bottom" />
       </div>
 
-      {/* Hero Section */}
-      <div className="home-hero">
+      {/* ──────────────────────────────────────────────────────────
+          Hero Section
+      ────────────────────────────────────────────────────────── */}
+      <section className="home-hero" ref={heroRef} aria-label="Hero">
         <div className="hero-container">
-          {/* Left Content */}
+          {/* ── Left: Copy + CTAs ── */}
           <motion.div
             className="hero-content"
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            variants={heroContainerVariants}
+            initial="hidden"
+            animate="visible"
           >
-            <div className="hero-badge">
-              <Sparkles size={14} />
-              <span>Your Career Journey Starts Here</span>
-            </div>
+            {/* Pill Badge */}
+            <motion.div className="hero-badge" variants={heroItemVariants}>
+              <div className="hero-badge-pill">
+                <Sparkles size={13} className="hero-badge-sparkle" />
+                <span className="hero-badge-label">AI CAREER DISCOVERY</span>
+              </div>
+              <span className="badge-tagline-text">Explore. Compare. Decide. Adapt.</span>
+            </motion.div>
 
-            <h1 className="hero-title">avenza</h1>
+            {/* Authoritative Headline — High Contrast & Vibrant */}
+            <motion.h1 className="hero-title" variants={heroItemVariants}>
+              Discover Your Future. <br />
+              <span className="hero-title-gradient">Driven by Intelligence.</span>
+            </motion.h1>
 
-            <p className="hero-tagline">
-              Explore. Compare. Decide. Adapt.
-            </p>
+            {/* Description */}
+            <motion.p className="hero-description" variants={heroItemVariants}>
+              Stop guessing your career path. AVENZA matches your unique strengths to
+              high-growth industries, compares salary trajectories across 50+ fields, and
+              builds your step-by-step roadmap with data-backed certainty.
+            </motion.p>
 
-            <p className="hero-description">
-              Discover your perfect career path with AI-powered insights, compare opportunities, and make informed decisions about your future.
-            </p>
-
-            <div className="hero-buttons">
-              <button
-                className="btn btn-primary"
+            {/* Action Buttons */}
+            <motion.div className="hero-buttons" variants={heroItemVariants}>
+              <motion.button
+                className="btn btn-primary hero-btn-main"
                 onClick={() => navigate('/career-discovery')}
+                whileHover={shouldReduceMotion ? {} : { scale: 1.03, y: -2 }}
+                whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
               >
-                <span>Explore Your Future</span>
-                <ArrowRight size={18} />
-              </button>
-              <button
-                className="btn btn-secondary"
+                <span>Start Free Discovery</span>
+                <ArrowRight size={18} className="hero-btn-arrow" />
+              </motion.button>
+
+              <motion.button
+                className="btn btn-secondary hero-btn-sub"
                 onClick={scrollToHowItWorks}
+                whileHover={shouldReduceMotion ? {} : { scale: 1.02, y: -2 }}
+                whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
               >
-                <PlayCircle size={18} />
                 <span>How It Works</span>
-              </button>
-            </div>
+                <ChevronDown size={17} className="hero-btn-chevron" />
+              </motion.button>
+            </motion.div>
+
+            {/* Trust Badges Row */}
+            <motion.div className="hero-trust-row" variants={heroItemVariants}>
+              {TRUST_BADGES.map(({ icon: Icon, text }) => (
+                <div key={text} className="trust-badge">
+                  <Icon size={14} className="trust-icon" />
+                  <span>{text}</span>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
 
-          {/* Right Visual */}
-          <motion.div
-            className="hero-visual-wrapper"
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+          {/* ── Right: 3D Visual Console ── */}
+          <div className="hero-visual-wrapper">
             <HeroVisual />
-          </motion.div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Stats Section */}
-      <StatsSection />
+      {/* ──────────────────────────────────────────────────────────
+          Stats Band
+      ────────────────────────────────────────────────────────── */}
+      <section className="home-section-wrap" aria-label="Statistics">
+        <StatsSection />
+      </section>
 
-      {/* Section Divider */}
       <div className="section-divider" />
 
-      {/* Features Section */}
-      <FeaturesSection />
+      {/* ──────────────────────────────────────────────────────────
+          Features Section (Bento Grid)
+      ────────────────────────────────────────────────────────── */}
+      <section className="home-section-wrap" aria-label="Platform Features">
+        <FeaturesSection />
+      </section>
 
-      {/* Section Divider */}
       <div className="section-divider" />
 
-      {/* How It Works Section */}
-      <HowItWorks />
+      {/* ──────────────────────────────────────────────────────────
+          How It Works Section
+      ────────────────────────────────────────────────────────── */}
+      <section className="home-section-wrap" aria-label="Methodology">
+        <HowItWorks />
+      </section>
 
-      {/* Section Divider */}
       <div className="section-divider" />
 
-      {/* Career Categories Section */}
-      <CareerCategories />
+      {/* ──────────────────────────────────────────────────────────
+          Career Categories Section
+      ────────────────────────────────────────────────────────── */}
+      <section className="home-section-wrap" aria-label="Career Disciplines">
+        <CareerCategories />
+      </section>
 
-      {/* Section Divider */}
       <div className="section-divider" />
 
-      {/* Why Avenza Section */}
-      <WhyAvenza />
+      {/* ──────────────────────────────────────────────────────────
+          Why Avenza Section
+      ────────────────────────────────────────────────────────── */}
+      <section className="home-section-wrap" aria-label="The Avenza Advantage">
+        <WhyAvenza />
+      </section>
 
-      {/* Final CTA Section */}
-      <CTASection />
+      {/* ──────────────────────────────────────────────────────────
+          Final High-Impact CTA
+      ────────────────────────────────────────────────────────── */}
+      <section className="home-section-wrap" aria-label="Get Started">
+        <CTASection />
+      </section>
 
       {/* Footer */}
       <Footer />

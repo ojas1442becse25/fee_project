@@ -144,7 +144,7 @@ export const careers = [
     category: "Creative",
     description: "Design intuitive and aesthetically pleasing digital interfaces, focusing on optimizing the user experience.",
     interests: ["Design", "Creative Arts", "Technology", "Problem Solving"],
-    requiredSkills: ["Creativity", "Communication", "Problem Solving", "Empathy"],
+    requiredSkills: ["Creativity", "Communication", "Problem Solving", "Teamwork"],
     recommendedStreams: ["Arts", "Commerce", "PCM", "PCB", "Other"],
     minimumMarks: 50,
     budgetLevel: ["Low", "Medium"],

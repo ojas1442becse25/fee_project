@@ -1,0 +1,725 @@
+/* ==========================================================================
+   AVENZA SaaS Features Page Styles
+   ========================================================================== */
+
+.features-page {
+  position: relative;
+  min-height: calc(100vh - 80px);
+  padding: 6.5rem 1.5rem 6rem;
+  background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.09) 0%, transparent 55%),
+              linear-gradient(180deg, #090d1a 0%, #0c1222 45%, #080c16 100%);
+  color: #f1f5f9;
+  overflow-x: hidden;
+}
+
+.features-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 600px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.features-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Hero Section
+   -------------------------------------------------------------------------- */
+.features-hero {
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto 5.5rem;
+}
+
+.features-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.15rem;
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #38bdf8;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.14);
+}
+
+.features-hero-title {
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+
+.features-hero-title .gradient-text {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.features-hero-sub {
+  font-size: clamp(1.0625rem, 2vw, 1.25rem);
+  color: #94a3b8;
+  line-height: 1.7;
+  max-width: 740px;
+  margin: 0 auto 2.25rem;
+}
+
+/* Quick Jump Pills */
+.features-jump-bar {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.jump-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.95rem;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.jump-tag:hover {
+  background: rgba(37, 99, 235, 0.15);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   Alternating Feature Showcases
+   -------------------------------------------------------------------------- */
+.features-showcases {
+  display: flex;
+  flex-direction: column;
+  gap: 7rem;
+  margin-bottom: 6rem;
+}
+
+.showcase-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.showcase-row--reverse .showcase-text-col {
+  order: 2;
+}
+
+.showcase-row--reverse .showcase-ui-col {
+  order: 1;
+}
+
+/* Text Column */
+.showcase-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.showcase-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #818cf8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.showcase-title {
+  font-size: clamp(1.85rem, 3.2vw, 2.35rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+  margin-bottom: 1.25rem;
+}
+
+.showcase-desc {
+  font-size: 1.025rem;
+  line-height: 1.7;
+  color: #94a3b8;
+  margin-bottom: 1.75rem;
+}
+
+.showcase-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.showcase-checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
+.showcase-check-icon {
+  flex-shrink: 0;
+  color: #38bdf8;
+  margin-top: 1px;
+}
+
+.showcase-cta-group {
+  display: flex;
+  gap: 0.875rem;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   Mock UI Cards (Window Chrome)
+   -------------------------------------------------------------------------- */
+.mock-window-card {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mock-window-card:hover {
+  border-color: rgba(56, 189, 248, 0.28);
+  box-shadow: 0 30px 75px rgba(0, 0, 0, 0.55);
+}
+
+.window-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1.25rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.window-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.window-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+.window-dot.red { background: #ef4444; }
+.window-dot.yellow { background: #f59e0b; }
+.window-dot.green { background: #10b981; }
+
+.window-title {
+  font-size: 0.75rem;
+  font-family: monospace;
+  color: #64748b;
+  letter-spacing: 0.04em;
+}
+
+.window-badge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 6px;
+  color: #38bdf8;
+  text-transform: uppercase;
+}
+
+.window-body {
+  padding: 1.75rem;
+}
+
+/* UI Preview 1: Assessment Step */
+.mock-step-indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.mock-progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.mock-progress-fill {
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  border-radius: 999px;
+}
+
+.mock-question-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+}
+
+.mock-tag-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+}
+
+.mock-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.03);
+  color: #94a3b8;
+}
+
+.mock-tag.active {
+  background: rgba(37, 99, 235, 0.22);
+  border-color: rgba(56, 189, 248, 0.45);
+  color: #ffffff;
+}
+
+.mock-tag-icon {
+  color: #38bdf8;
+}
+
+.mock-footer-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+/* UI Preview 2: Match Score & Recommendations */
+.mock-match-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.mock-score-circle {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(15, 23, 42, 0.6) 80%);
+  border: 2px solid #10b981;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
+}
+
+.mock-score-num {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #34d399;
+  line-height: 1;
+}
+
+.mock-score-text {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #a7f3d0;
+  text-transform: uppercase;
+}
+
+.mock-career-info h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.35rem;
+}
+
+.mock-meta-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mock-mini-badge {
+  font-size: 0.725rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+  color: #94a3b8;
+}
+
+.mock-mini-badge.emerald {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+.mock-bars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.mock-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.mock-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: #cbd5e1;
+}
+
+.mock-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.mock-bar-val {
+  height: 100%;
+  border-radius: 999px;
+}
+
+/* UI Preview 3: Career Detail & Roadmap */
+.mock-detail-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.mock-detail-role {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.mock-detail-role h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.mock-salary-tag {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.mock-skills-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mock-skill-chip {
+  font-size: 0.775rem;
+  padding: 0.25rem 0.65rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: #cbd5e1;
+}
+
+.mock-roadmap-preview {
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mock-milestone {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.mock-milestone-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+  flex-shrink: 0;
+}
+
+.mock-milestone strong {
+  color: #ffffff;
+}
+
+/* UI Preview 4: Saved Careers & Dashboard */
+.mock-dashboard-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mock-dash-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding-bottom: 0.75rem;
+}
+
+.mock-dash-tab {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 6px;
+  color: #64748b;
+}
+
+.mock-dash-tab.active {
+  background: rgba(124, 58, 237, 0.15);
+  color: #c084fc;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+}
+
+.mock-saved-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+}
+
+.mock-saved-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.mock-saved-meta {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.mock-saved-score {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+}
+
+/* --------------------------------------------------------------------------
+   Complementary Grid Section
+   -------------------------------------------------------------------------- */
+.features-grid-section {
+  margin-bottom: 6rem;
+}
+
+.features-grid-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 3rem;
+}
+
+.complementary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.comp-card {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  padding: 1.85rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.comp-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 189, 248, 0.25);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+}
+
+.comp-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(37, 99, 235, 0.12);
+  color: #38bdf8;
+  margin-bottom: 1.25rem;
+}
+
+.comp-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.65rem;
+}
+
+.comp-desc {
+  font-size: 0.925rem;
+  color: #94a3b8;
+  line-height: 1.65;
+}
+
+/* --------------------------------------------------------------------------
+   CTA Card
+   -------------------------------------------------------------------------- */
+.features-cta-card {
+  background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.25) 0%, rgba(15, 23, 42, 0.8) 75%);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  border-radius: 24px;
+  padding: 3.75rem 2rem;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.features-cta-title {
+  font-size: clamp(1.85rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.features-cta-desc {
+  font-size: 1.0625rem;
+  color: #94a3b8;
+  max-width: 620px;
+  margin: 0 auto 2.25rem;
+  line-height: 1.65;
+}
+
+.features-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Rules
+   -------------------------------------------------------------------------- */
+@media (max-width: 968px) {
+  .showcase-row {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .showcase-row--reverse .showcase-text-col,
+  .showcase-row--reverse .showcase-ui-col {
+    order: unset;
+  }
+
+  .complementary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .features-page {
+    padding: 5rem 1rem 4rem;
+  }
+
+  .features-showcases {
+    gap: 4.5rem;
+  }
+
+  .window-body {
+    padding: 1.25rem;
+  }
+
+  .mock-tag-grid {
+    gap: 0.5rem;
+  }
+
+  .mock-tag {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .features-cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .features-cta-buttons .btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mock-window-card,
+  .comp-card {
+    transition: none !important;
+    transform: none !important;
+  }
+}

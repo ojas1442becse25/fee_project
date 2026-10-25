@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
+import { CareerProvider } from './context/CareerContext'
 import MainLayout from './components/layout/MainLayout'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import Home from './pages/Home/Home'
@@ -19,52 +20,62 @@ import SavedCareers from './pages/Dashboard/SavedCareers'
 
 // App
 // ---
-// Route tree for the whole application. Note the nesting:
-//   - public pages live inside MainLayout (shared navbar)
-//   - /career/results is a static route and must win over the dynamic
-//     /career/:careerSlug route (React Router ranks static segments higher)
-//   - the career detail route is dynamic (/career/:careerSlug)
-//   - the whole /dashboard section is wrapped in ProtectedRoute
-//     and is itself a nested route with its own layout + <Outlet/>
-//   - the * route catches anything unknown (404 page)
+// Route tree for the whole application:
+//   - Public pages live inside MainLayout (shared navbar)
+//   - Multi-page SPA routes: Home, About, Features, Contact, FAQ, Login
+//   - Assessment routes: /career-discovery (alias: /career, /assessment)
+//   - Recommendations routes: /career-recommendations, /career/results
+//   - Dynamic route: /career/:careerSlug (uses useParams)
+//   - Protected nested dashboard: /dashboard with index, /profile, /saved-careers
+//   - Global state: AuthProvider + CareerProvider (Context API)
+//   - 404 catch-all: path="*"
 function App() {
   return (
     <Router>
       <AuthProvider>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="features" element={<Features />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="faq" element={<FAQ />} />
-            <Route path="career-discovery" element={<CareerDiscovery />} />
-            {/* /career is a short alias for the assessment */}
-            <Route path="career" element={<Navigate to="/career-discovery" replace />} />
-            {/* Static results route - declared before the dynamic one */}
-            <Route path="career/results" element={<CareerResultsPage />} />
-            {/* Dynamic route - the :careerSlug param is read with useParams */}
-            <Route path="career/:careerSlug" element={<CareerDetails />} />
-            <Route path="login" element={<Login />} />
+        <CareerProvider>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<Home />} />
+              <Route path="about" element={<About />} />
+              <Route path="features" element={<Features />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="faq" element={<FAQ />} />
+              <Route path="career-discovery" element={<CareerDiscovery />} />
+              {/* Short aliases for the career assessment */}
+              <Route path="career" element={<Navigate to="/career-discovery" replace />} />
+              <Route path="assessment" element={<Navigate to="/career-discovery" replace />} />
+              {/* Career recommendations routes (static, evaluated before dynamic slug) */}
+              <Route path="career-recommendations" element={<CareerResultsPage />} />
+              <Route path="recommendations" element={<Navigate to="/career-recommendations" replace />} />
+              <Route path="career/results" element={<CareerResultsPage />} />
+              {/* Dynamic route - :careerSlug param read with useParams */}
+              <Route path="career/:careerSlug" element={<CareerDetails />} />
+              <Route path="login" element={<Login />} />
 
-            {/* Protected + nested dashboard routes */}
-            <Route
-              path="dashboard"
-              element={
-                <ProtectedRoute>
-                  <DashboardLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<DashboardHome />} />
-              <Route path="profile" element={<ProfilePage />} />
-              <Route path="saved-careers" element={<SavedCareers />} />
+              {/* Convenience direct aliases for dashboard subpages */}
+              <Route path="profile" element={<Navigate to="/dashboard/profile" replace />} />
+              <Route path="saved-careers" element={<Navigate to="/dashboard/saved-careers" replace />} />
+
+              {/* Protected + nested dashboard routes */}
+              <Route
+                path="dashboard"
+                element={
+                  <ProtectedRoute>
+                    <DashboardLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<DashboardHome />} />
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="saved-careers" element={<SavedCareers />} />
+              </Route>
+
+              {/* 404 - any unknown path */}
+              <Route path="*" element={<NotFound />} />
             </Route>
-
-            {/* 404 - any unknown path */}
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
+          </Routes>
+        </CareerProvider>
       </AuthProvider>
     </Router>
   )

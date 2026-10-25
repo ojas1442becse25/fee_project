@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 
 const ProgressSteps = ({ currentStep }) => {
   const steps = [

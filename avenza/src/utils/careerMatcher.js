@@ -51,7 +51,25 @@ const buildPersonalReason = (matchedInterests, matchedSkills, streamMatch, strea
   return 'This career aligns with your profile, strengths, and goals.';
 };
 
-export const calculateMatches = (userProfile) => {
+// Normalizes and cross-references interests with user selections
+const isInterestMatched = (careerInterest, userInterests = [], userSkills = []) => {
+  if (userInterests.includes(careerInterest)) return true;
+  // Intelligent cross-matching for common aliases
+  if (careerInterest === 'Coding' && (userSkills.includes('Programming') || userInterests.includes('Technology'))) return true;
+  if (careerInterest === 'Problem Solving' && (userSkills.includes('Problem Solving') || userSkills.includes('Analytical Thinking'))) return true;
+  if (careerInterest === 'Research' && (userSkills.includes('Research') || userInterests.includes('Biology'))) return true;
+  if (careerInterest === 'Management' && (userSkills.includes('Leadership') || userInterests.includes('Business'))) return true;
+  return false;
+};
+
+// Normalizes and checks required skills against user selections
+const isSkillMatched = (careerSkill, userSkills = []) => {
+  if (userSkills.includes(careerSkill)) return true;
+  if (careerSkill === 'Empathy' && (userSkills.includes('Communication') || userSkills.includes('Teamwork'))) return true;
+  return false;
+};
+
+export const calculateMatches = (userProfile = {}, limit = 3) => {
   const {
     stream,
     marks,
@@ -71,41 +89,49 @@ export const calculateMatches = (userProfile) => {
       (stream === 'Other' && career.recommendedStreams.includes('Other'));
     details.stream = streamMatch ? WEIGHT.stream : 0;
 
-    // 2. Interests (max 25) - proportion of the career's interest set selected
-    const matchedInterests = career.interests.filter((i) => interests.includes(i));
+    // 2. Interests (max 25) - proportion of the career's interest set matched
+    const matchedInterests = career.interests.filter((i) =>
+      isInterestMatched(i, interests, skills)
+    );
     details.interests = career.interests.length
       ? Math.round((matchedInterests.length / career.interests.length) * WEIGHT.interests)
       : 0;
 
     // 3. Strengths / skills (max 25)
-    const matchedSkills = career.requiredSkills.filter((s) => skills.includes(s));
+    const matchedSkills = career.requiredSkills.filter((s) =>
+      isSkillMatched(s, skills)
+    );
     details.skills = career.requiredSkills.length
       ? Math.round((matchedSkills.length / career.requiredSkills.length) * WEIGHT.skills)
       : 0;
 
     // 4. Career goal (max 15) - exact category match scores highest
     if (careerGoal && careerGoal !== 'Not Sure') {
-      if (career.category === careerGoal) {
+      if (career.category.toLowerCase() === careerGoal.toLowerCase()) {
         details.goal = WEIGHT.goal;
-      } else if (career.category.toLowerCase().includes(careerGoal.toLowerCase())) {
+      } else if (
+        career.category.toLowerCase().includes(careerGoal.toLowerCase()) ||
+        careerGoal.toLowerCase().includes(career.category.toLowerCase())
+      ) {
         details.goal = Math.round(WEIGHT.goal * 0.75); // partial overlap
       }
     } else {
       details.goal = 7; // neutral when no specific goal is chosen
     }
 
-    // 5. Academic performance (max 10) - passing the minimum scores fully
+    // 5. Academic performance (max 10) - meeting or exceeding minimum marks
     if (parsedMarks >= career.minimumMarks) {
       details.marks = WEIGHT.marks;
     } else if (career.minimumMarks - parsedMarks <= 10) {
       details.marks = Math.max(0, WEIGHT.marks - (career.minimumMarks - parsedMarks));
     }
 
-    const matchScore = Math.round(
-      details.stream + details.interests + details.skills + details.goal + details.marks
+    const matchScore = Math.min(
+      100,
+      Math.round(details.stream + details.interests + details.skills + details.goal + details.marks)
     );
 
-    // ----- Personalized explanations (generated from real selections) -----
+    // Personalized explanations (generated from real user selections)
     const matchReasons = [];
     if (matchedInterests.length) {
       matchReasons.push(`Your interest in ${listWords(matchedInterests)} drives this field.`);
@@ -128,7 +154,7 @@ export const calculateMatches = (userProfile) => {
     return {
       ...career,
       matchScore,
-      matchDetails: details, // weight breakdown - useful for the wireframe/debug
+      matchDetails: details,
       matchReasons,
       personalReason: buildPersonalReason(matchedInterests, matchedSkills, streamMatch, stream)
     };
@@ -136,6 +162,6 @@ export const calculateMatches = (userProfile) => {
 
   scoredCareers.sort((a, b) => b.matchScore - a.matchScore);
 
-  // Return the Top 3 matches.
-  return scoredCareers.slice(0, 3);
+  // Return top matches (or all if limit is null/0)
+  return limit ? scoredCareers.slice(0, limit) : scoredCareers;
 };
